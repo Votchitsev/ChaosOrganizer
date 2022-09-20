@@ -1,3 +1,68 @@
+/*
+BRAND COLOR = #5BCCD0
+*/
+
 body {
-  background-color: blanchedalmond;
+  background-color: #E0FCF3;
+  font-family: OpenSans;
+}
+
+.app-title {
+  color: #5BCCD0;
+  margin-left: 10%;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.post-form > input[type="text"] {
+  height: 50px;
+  width: 500px;
+  border-radius: 50px;
+  border: none;
+  padding-left: 30px;
+  padding-right: 15px;
+}
+
+.post-form > input[type="text"]:focus {
+  outline: 3px solid #5BCCD0;
+
+  transition: all 100ms linear;
+}
+
+.post {
+  width: 70%;
+  align-self: flex-end;
+  background-color: #83E2DD;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+
+.bot {
+  align-self: flex-start;
+  background-color: #81CEFF;
+}
+
+.post-title {
+  font-size: 0.8em;
+  color: #2D8095;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url(./fonts/OpenSans-Regular.ttf);
 }

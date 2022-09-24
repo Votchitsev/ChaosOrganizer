@@ -1,9 +1,10 @@
 import { parseDate } from './Service';
 
 class Post {
-  constructor(text, type = 'user') {
+  constructor(text, time, type = 'user') {
     this.text = text;
     this.type = type;
+    this.time = time;
     this.HTMLElement = this.create();
 
     this.create = this.create.bind(this);
@@ -26,7 +27,7 @@ class Post {
     post.insertAdjacentElement('afterbegin', postTitle);
     post.insertAdjacentElement('beforeend', postContent);
 
-    postTitle.textContent = `${parseDate(Date.now())}`;
+    postTitle.textContent = `${parseDate(this.time)}`;
     postContent.textContent = this.text;
 
     return post;

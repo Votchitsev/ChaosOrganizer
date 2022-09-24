@@ -1,8 +1,9 @@
 async function request(method = 'GET', url = '', data = null) {
   const BASE_URL = 'http://localhost:8080/';
+  let response;
 
   if (method === 'POST') {
-    const response = await fetch(BASE_URL + url, {
+    response = await fetch(BASE_URL + url, {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -10,19 +11,20 @@ async function request(method = 'GET', url = '', data = null) {
       },
       body: JSON.stringify(data),
     });
+    return response;
   }
 
   if (method === 'GET') {
-    const response = await fetch(BASE_URL + url, {
+    response = await fetch(BASE_URL + url, {
       method,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
     });
-
-    return response;
   }
+
+  return response;
 }
 
 export default request;

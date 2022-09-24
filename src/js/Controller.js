@@ -25,16 +25,17 @@ class Controller {
   sendTextNote(e) {
     e.preventDefault();
 
-    const post = new this.Post(this.form.textInput.value);
+    const time = Date.now();
+    const post = new this.Post(this.form.textInput.value, time);
     const text = post.HTMLElement.querySelector('.post-content');
 
     text.innerHTML = findLinks(text);
 
     this.drawPost(post.HTMLElement);
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
-
     request('POST', '', {
       type: 'textPosts',
+      time,
       content: {
         text: text.textContent,
       },
@@ -50,8 +51,9 @@ class Controller {
   drawPostList(postList) {
     for (let i = 0; i < postList.length; i += 1) {
       const { text } = postList[i].content;
-      const post = new this.Post(text);
-      console.log(post);
+      const { time } = postList[i];
+      console.log(postList[i]);
+      const post = new this.Post(text, time);
       const textElement = post.HTMLElement.querySelector('.post-content');
       textElement.innerHTML = findLinks(textElement);
       this.drawPost(post.HTMLElement);

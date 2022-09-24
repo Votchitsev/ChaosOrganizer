@@ -52,9 +52,9 @@ class Controller {
     for (let i = 0; i < postList.length; i += 1) {
       const { text } = postList[i].content;
       const { time } = postList[i];
-      console.log(postList[i]);
       const post = new this.Post(text, time);
       const textElement = post.HTMLElement.querySelector('.post-content');
+
       textElement.innerHTML = findLinks(textElement);
       this.drawPost(post.HTMLElement);
     }

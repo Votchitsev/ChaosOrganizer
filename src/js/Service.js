@@ -18,4 +18,19 @@ function findLinks(text) {
     }).join(' ');
 }
 
-export { parseDate, findLinks };
+async function desappearElement(element) {
+  let time = 0;
+  const el = element;
+  el.style.opacity = 1;
+
+  const interval = setInterval(() => {
+    el.style.opacity -= 0.1;
+    time += 300;
+    if (time === 3000) {
+      el.remove();
+      clearInterval(interval);
+    }
+  }, 300);
+}
+
+export { parseDate, findLinks, desappearElement };

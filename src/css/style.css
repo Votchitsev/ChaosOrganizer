@@ -89,6 +89,20 @@ body {
   background-size: 25px;
 }
 
+.desappeared-popup {
+  position: absolute;
+  display: block;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: #3C9B1F 2px 2px 5px;
+  background-color: #ACE87E;
+  color: #3C9B1F;
+  font-size: 2em;
+  top: 50vh;
+  left: 50vh;
+  translate: 50% -50%;
+}
+
 @font-face {
   font-family: 'OpenSans';
   src: url(./fonts/OpenSans-Regular.ttf);

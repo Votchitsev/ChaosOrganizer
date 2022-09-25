@@ -1,14 +1,17 @@
-import { findLinks } from './Service';
+import { findLinks, desappearElement } from './Service';
 import request from './API/request';
 
 class Controller {
   constructor(form, Post) {
     this.form = form;
     this.postsContainer = document.querySelector('.posts-container');
+    this.fileInput = document.querySelector('#file-upload');
+    this.fileInputBtn = document.querySelector('.file-upload-label');
     this.Post = Post;
 
     this.addEventListeners = this.addEventListeners.bind(this);
     this.sendTextNote = this.sendTextNote.bind(this);
+    this.fileInputOnChange = this.fileInputOnChange.bind(this);
   }
 
   async init() {
@@ -20,6 +23,7 @@ class Controller {
 
   addEventListeners() {
     this.form.textForm.addEventListener('submit', this.sendTextNote);
+    this.fileInput.addEventListener('change', this.fileInputOnChange);
   }
 
   sendTextNote(e) {
@@ -58,6 +62,18 @@ class Controller {
       textElement.innerHTML = findLinks(textElement);
       this.drawPost(post.HTMLElement);
     }
+  }
+
+  fileInputOnChange() {
+    this.fileInputBtn.style.backgroundColor = '#ACE87E';
+
+    const popupEl = document.createElement('div');
+    popupEl.classList.add('desappeared-popup');
+    popupEl.textContent = 'Файл выбран';
+    document.querySelector('body').append(popupEl);
+
+    const popup = document.querySelector('.desappeared-popup');
+    desappearElement(popup);
   }
 }
 

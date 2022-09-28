@@ -18,19 +18,18 @@ function findLinks(text) {
     }).join(' ');
 }
 
-async function desappearElement(element) {
-  let time = 0;
-  const el = element;
-  el.style.opacity = 1;
+function element(selector, text = null, classList = []) {
+  const el = document.createElement(selector);
 
-  const interval = setInterval(() => {
-    el.style.opacity -= 0.1;
-    time += 300;
-    if (time === 3000) {
-      el.remove();
-      clearInterval(interval);
-    }
-  }, 300);
+  if (classList.length) {
+    classList.forEach((cls) => el.classList.add(cls));
+  }
+
+  if (text) {
+    el.textContent = text;
+  }
+
+  return el;
 }
 
-export { parseDate, findLinks, desappearElement };
+export { parseDate, findLinks, element };

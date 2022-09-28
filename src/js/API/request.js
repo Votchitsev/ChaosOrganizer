@@ -1,15 +1,13 @@
 async function request(method = 'GET', url = '', data = null) {
   const BASE_URL = 'http://localhost:8080/';
   let response;
-
   if (method === 'POST') {
     response = await fetch(BASE_URL + url, {
       method,
       headers: {
-        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify(data),
+      body: data,
     });
     return response;
   }

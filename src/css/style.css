@@ -139,6 +139,36 @@ img {
   background-color: #FF8D75;
 }
 
+.drop-upload-message {
+  font-size: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% 50%;
+}
+
+#drop-zone {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  z-index: 1;
+  border: 4px dashed #5BCCD0;
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 100px;
+}
+
+#drop-zone.visible {
+  display: flex;
+}
+
 @font-face {
   font-family: 'OpenSans';
   src: url(./fonts/OpenSans-Regular.ttf);

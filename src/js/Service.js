@@ -32,4 +32,40 @@ function element(selector, text = null, classList = []) {
   return el;
 }
 
-export { parseDate, findLinks, element };
+function makeData(post) {
+  const formData = new FormData();
+  formData.append('type', 'post');
+  formData.append('time', post.time);
+  formData.append('text', post.text);
+
+  post.img.forEach((file) => {
+    formData.append('file', file);
+  });
+  return formData;
+}
+
+function checkTotalSize(fileList, limit) {
+  const totalSize = Array.from(fileList)
+    .reduce((currentFile, nextFile) => currentFile + nextFile.size, 0);
+  return totalSize <= limit;
+}
+
+function showErrorPopup(errorMessage) {
+  const errorPopup = element('div', null, ['error-popup']);
+  const errorPopupContent = element('div', errorMessage, ['error-popup-message']);
+  const errorPopupBtn = element('button', null, ['error-popup-btn']);
+  errorPopupBtn.textContent = 'OK';
+  errorPopup.insertAdjacentElement('afterbegin', errorPopupContent);
+  errorPopup.insertAdjacentElement('beforeend', errorPopupBtn);
+
+  document.querySelector('body').append(errorPopup);
+}
+
+export {
+  parseDate,
+  findLinks,
+  element,
+  makeData,
+  checkTotalSize,
+  showErrorPopup,
+};

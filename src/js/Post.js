@@ -6,9 +6,10 @@ class Post {
     this.type = type;
     this.time = Number(time);
     this.img = img;
-    this.HTMLElement = this.create();
 
     this.create = this.create.bind(this);
+
+    this.HTMLElement = this.create();
   }
 
   create() {
@@ -23,10 +24,15 @@ class Post {
     post.insertAdjacentElement('afterbegin', postTitle);
     post.insertAdjacentElement('beforeend', postContent);
 
-    if (this.img && this.img !== 'null') {
-      const img = element('img');
-      img.src = this.img;
-      post.insertAdjacentElement('beforeend', img);
+    if (this.img && this.img.length) {
+      const imgContainer = element('div', null, ['post-img-container']);
+      post.insertAdjacentElement('beforeend', imgContainer);
+
+      Array.from(this.img).forEach((src) => {
+        const img = element('img', null, []);
+        img.src = src;
+        imgContainer.append(img);
+      });
     }
 
     return post;

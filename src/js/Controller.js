@@ -1,4 +1,10 @@
-import { findLinks } from './Service';
+import {
+  checkTotalSize,
+  element,
+  findLinks,
+  makeData,
+  showErrorPopup,
+} from './Service';
 import request from './API/request';
 
 class Controller {
@@ -8,14 +14,15 @@ class Controller {
     this.fileInput = document.querySelector('#file-input');
     this.openFileUpload = document.querySelector('.file-upload');
     this.Post = Post;
-    this.file = null;
+    this.file = [];
+    this.previewContainer = null;
 
     this.addEventListeners = this.addEventListeners.bind(this);
     this.sendPost = this.sendPost.bind(this);
     this.fileInputOnChange = this.fileInputOnChange.bind(this);
     this.drawPostList = this.drawPostList.bind(this);
     this.openUploadWindow = this.openUploadWindow.bind(this);
-    this.filePreview = this.filePreview.bind(this);
+    this.addFilePreview = this.addFilePreview.bind(this);
   }
 
   async init() {
@@ -42,16 +49,14 @@ class Controller {
     this.drawPost(post.HTMLElement);
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
 
-    const formData = new FormData();
-    formData.append('type', 'post');
-    formData.append('time', post.time);
-    formData.append('text', post.text);
-    formData.append('file', post.img);
+    const data = makeData(post);
 
-    request('POST', '', formData);
+    request('POST', '', data);
 
     this.form.clean();
-    document.querySelector('.filePreviewContainer').remove();
+    if (this.previewContainer) {
+      this.previewContainer.remove();
+    }
   }
 
   drawPost(post) {
@@ -69,16 +74,29 @@ class Controller {
     }
   }
 
-  fileInputOnChange() {
-    const file = this.fileInput.files && this.fileInput.files[0];
-    const reader = new FileReader();
+  fileInputOnChange(e) {
+    e.preventDefault();
+    if (!this.fileInput.files.length) {
+      return;
+    }
 
-    reader.addEventListener('load', (e) => {
-      this.file = e.target.result;
-      this.filePreview();
+    const validatedSize = checkTotalSize(e.target.files);
+    if (!validatedSize) {
+      showErrorPopup('Превышен максимальный размер передаваемых файлов (10 mb)');
+      return;
+    }
+
+    this.previewContainer = element('div', null, ['filePreviewContainer']);
+    this.form.textForm.insertAdjacentElement('beforebegin', this.previewContainer);
+    this.previewContainer.style.top = `${this.openFileUpload.offsetTop - 160}px`;
+
+    Array.from(this.fileInput.files).forEach((file) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', (event) => {
+        this.addFilePreview(event.target.result);
+      });
+      reader.readAsDataURL(file);
     });
-
-    reader.readAsDataURL(file);
   }
 
   openUploadWindow(e) {
@@ -86,20 +104,11 @@ class Controller {
     this.fileInput.click();
   }
 
-  filePreview() {
-    if (document.querySelector('.filePreviewContainer')) {
-      document.querySelector('.filePreviewContainer').remove();
-    }
-
-    const img = document.createElement('img');
-    img.src = this.file;
-
-    const container = document.createElement('div');
-    container.classList.add('filePreviewContainer');
-
-    container.insertAdjacentElement('afterbegin', img);
-    this.form.textForm.insertAdjacentElement('beforebegin', container);
-    container.style.top = `${this.openFileUpload.offsetTop - container.getBoundingClientRect().height - 10}px`;
+  addFilePreview(file) {
+    const img = element('img', null, []);
+    img.src = file;
+    this.previewContainer.insertAdjacentElement('beforeend', img);
+    this.file.push(file);
   }
 }
 

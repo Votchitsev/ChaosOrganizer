@@ -6,6 +6,7 @@ import {
   showErrorPopup,
 } from './Service';
 import request from './API/request';
+import DragAndDrop from './DragAndDrop';
 
 class Controller {
   constructor(form, Post) {
@@ -31,11 +32,15 @@ class Controller {
     const posts = await request('GET', '', null);
     const postsJSON = await posts.json();
     this.drawPostList(postsJSON);
+
+    const dropZone = document.querySelector('#drop-zone');
+    const dradAndDrop = new DragAndDrop(dropZone, this);
+    dradAndDrop.init();
+    this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
   }
 
   clickEventRouter(event) {
     const selector = event.target.classList;
-    console.log(selector);
     if (selector.contains('file-upload')) {
       this.openUploadWindow(event);
     }
@@ -90,8 +95,15 @@ class Controller {
 
   fileInputOnChange(e) {
     e.preventDefault();
+
+    this.file = [];
+
     if (!this.fileInput.files.length) {
       return;
+    }
+
+    if (this.previewContainer) {
+      this.previewContainer.remove();
     }
 
     const validatedSize = checkTotalSize(e.target.files, 10000000);
@@ -115,6 +127,7 @@ class Controller {
 
   openUploadWindow(e) {
     e.preventDefault();
+    this.fileInput.files = null;
     this.fileInput.click();
   }
 

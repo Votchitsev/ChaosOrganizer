@@ -153,11 +153,11 @@ img {
   align-items: center;
   text-align: center;
   position: fixed;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-  bottom: 10%;
-  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
   border: 4px dashed #5BCCD0;
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.2);

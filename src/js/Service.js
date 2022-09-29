@@ -61,6 +61,11 @@ function showErrorPopup(errorMessage) {
   document.querySelector('body').append(errorPopup);
 }
 
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
 export {
   parseDate,
   findLinks,
@@ -68,4 +73,5 @@ export {
   makeData,
   checkTotalSize,
   showErrorPopup,
+  preventDefaults,
 };

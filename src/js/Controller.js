@@ -23,6 +23,7 @@ class Controller {
     this.drawPostList = this.drawPostList.bind(this);
     this.openUploadWindow = this.openUploadWindow.bind(this);
     this.addFilePreview = this.addFilePreview.bind(this);
+    this.clickEventRouter = this.clickEventRouter.bind(this);
   }
 
   async init() {
@@ -32,9 +33,21 @@ class Controller {
     this.drawPostList(postsJSON);
   }
 
+  clickEventRouter(event) {
+    const selector = event.target.classList;
+    console.log(selector);
+    if (selector.contains('file-upload')) {
+      this.openUploadWindow(event);
+    }
+
+    if (selector.contains('error-popup-btn')) {
+      document.querySelector('.error-popup').remove();
+    }
+  }
+
   addEventListeners() {
     this.form.textForm.addEventListener('submit', this.sendPost);
-    this.openFileUpload.addEventListener('click', this.openUploadWindow);
+    window.addEventListener('click', this.clickEventRouter);
     this.fileInput.addEventListener('change', this.fileInputOnChange);
   }
 
@@ -51,7 +64,8 @@ class Controller {
 
     const data = makeData(post);
 
-    request('POST', '', data);
+    request('POST', '', data)
+      .then(() => { this.file = []; });
 
     this.form.clean();
     if (this.previewContainer) {
@@ -80,7 +94,7 @@ class Controller {
       return;
     }
 
-    const validatedSize = checkTotalSize(e.target.files);
+    const validatedSize = checkTotalSize(e.target.files, 10000000);
     if (!validatedSize) {
       showErrorPopup('Превышен максимальный размер передаваемых файлов (10 mb)');
       return;

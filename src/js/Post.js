@@ -24,7 +24,7 @@ class Post {
     post.insertAdjacentElement('afterbegin', postTitle);
     post.insertAdjacentElement('beforeend', postContent);
 
-    if (this.img && this.img.length) {
+    if (this.img.length && this.img[0]) {
       const imgContainer = element('div', null, ['post-img-container']);
       post.insertAdjacentElement('beforeend', imgContainer);
 

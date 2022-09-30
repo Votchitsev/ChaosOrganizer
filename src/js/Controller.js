@@ -18,6 +18,7 @@ class Controller {
     this.Post = Post;
     this.file = [];
     this.previewContainer = null;
+    this.pagination = [0, 9];
 
     this.addEventListeners = this.addEventListeners.bind(this);
     this.sendPost = this.sendPost.bind(this);
@@ -26,13 +27,14 @@ class Controller {
     this.openUploadWindow = this.openUploadWindow.bind(this);
     this.addFilePreview = this.addFilePreview.bind(this);
     this.clickEventRouter = this.clickEventRouter.bind(this);
+    this.scroll = this.scroll.bind(this);
   }
 
   async init() {
     this.addEventListeners();
-    const posts = await request('GET', '', null);
+    const posts = await request(this.pagination, 'GET', '', null);
     const postsJSON = await posts.json();
-    this.drawPostList(postsJSON);
+    this.drawPostList(postsJSON, 'afterbegin');
 
     const dropZone = document.querySelector('#drop-zone');
     const dradAndDrop = new DragAndDrop(dropZone, this);
@@ -54,6 +56,7 @@ class Controller {
   addEventListeners() {
     this.form.textForm.addEventListener('submit', this.sendPost);
     window.addEventListener('click', this.clickEventRouter);
+    this.postsContainer.addEventListener('scroll', this.scroll);
     this.fileInput.addEventListener('change', this.fileInputOnChange);
   }
 
@@ -65,12 +68,12 @@ class Controller {
 
     text.innerHTML = findLinks(text);
 
-    this.drawPost(post.HTMLElement);
+    this.drawPost(post.HTMLElement, 'beforeend');
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
 
     const data = makeData(post);
 
-    request('POST', '', data)
+    request(this.pagination, 'POST', '', data)
       .then(() => { this.file = []; });
 
     this.form.clean();
@@ -79,18 +82,18 @@ class Controller {
     }
   }
 
-  drawPost(post) {
-    this.postsContainer.append(post);
+  drawPost(post, where) {
+    this.postsContainer.insertAdjacentElement(where, post);
   }
 
-  drawPostList(postList) {
+  drawPostList(postList, where) {
     for (let i = 0; i < postList.length; i += 1) {
       const { text, time, files } = postList[i];
       const post = new this.Post(text, time, 'user', files);
       const textElement = post.HTMLElement.querySelector('.post-content');
 
       textElement.innerHTML = findLinks(textElement);
-      this.drawPost(post.HTMLElement);
+      this.drawPost(post.HTMLElement, where);
     }
   }
 
@@ -130,7 +133,9 @@ class Controller {
     e.preventDefault();
     this.fileInput.files = null;
     this.file = [];
-    this.previewContainer.remove();
+    if (this.previewContainer) {
+      this.previewContainer.remove();
+    }
     this.fileInput.click();
   }
 
@@ -157,6 +162,24 @@ class Controller {
     img.src = file;
     this.previewContainer.insertAdjacentElement('beforeend', img);
     this.file.push(file);
+  }
+
+  async scroll(e) {
+    let currentScroll;
+
+    if (e.target.scrollTop === 0) {
+      currentScroll = e.target.scrollHeight;
+      this.pagination = this.pagination.map((el) => el + 10);
+      const posts = await request(this.pagination, 'GET', '', null);
+      const postsJSON = await posts.json();
+
+      if (!postsJSON.length) {
+        return;
+      }
+
+      this.drawPostList(postsJSON, 'afterbegin');
+      this.postsContainer.scrollTop = e.target.scrollHeight - currentScroll;
+    }
   }
 }
 

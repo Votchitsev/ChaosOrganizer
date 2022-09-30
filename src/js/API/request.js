@@ -1,4 +1,4 @@
-async function request(method = 'GET', url = '', data = null) {
+async function request(pagination, method = 'GET', url = '', data = null) {
   const BASE_URL = 'http://localhost:8080/';
   let response;
 
@@ -14,7 +14,7 @@ async function request(method = 'GET', url = '', data = null) {
   }
 
   if (method === 'GET') {
-    response = await fetch(BASE_URL + url, {
+    response = await fetch(`${BASE_URL}{url}/?start=${pagination[0]}&end=${pagination[1]}`, {
       method,
       headers: {
         'Content-Type': 'application/json',

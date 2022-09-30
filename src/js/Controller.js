@@ -129,6 +129,8 @@ class Controller {
   openUploadWindow(e) {
     e.preventDefault();
     this.fileInput.files = null;
+    this.file = [];
+    this.previewContainer.remove();
     this.fileInput.click();
   }
 

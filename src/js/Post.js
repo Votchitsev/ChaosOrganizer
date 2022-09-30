@@ -1,11 +1,11 @@
-import { parseDate, element } from './Service';
+import { parseDate, element, getFileFormat } from './Service';
 
 class Post {
-  constructor(text, time, type = 'user', img = null) {
+  constructor(text, time, type = 'user', file = null) {
     this.text = text;
     this.type = type;
     this.time = Number(time);
-    this.img = img;
+    this.file = file;
 
     this.create = this.create.bind(this);
 
@@ -24,14 +24,22 @@ class Post {
     post.insertAdjacentElement('afterbegin', postTitle);
     post.insertAdjacentElement('beforeend', postContent);
 
-    if (this.img.length && this.img[0]) {
-      const imgContainer = element('div', null, ['post-img-container']);
-      post.insertAdjacentElement('beforeend', imgContainer);
+    if (this.file.length && this.file[0]) {
+      const fileContainer = element('div', null, ['post-img-container']);
+      post.insertAdjacentElement('beforeend', fileContainer);
 
-      Array.from(this.img).forEach((src) => {
+      Array.from(this.file).forEach((src) => {
+        if (getFileFormat(src) === 'audio') {
+          const audioElement = element('audio', null, []);
+          audioElement.setAttribute('controls', '');
+          audioElement.src = src;
+          fileContainer.append(audioElement);
+          return;
+        }
+
         const img = element('img', null, []);
         img.src = src;
-        imgContainer.append(img);
+        fileContainer.append(img);
       });
     }
 

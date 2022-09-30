@@ -38,7 +38,7 @@ function makeData(post) {
   formData.append('time', post.time);
   formData.append('text', post.text);
 
-  post.img.forEach((file) => {
+  post.file.forEach((file) => {
     formData.append('file', file);
   });
   return formData;
@@ -66,6 +66,18 @@ function preventDefaults(e) {
   e.stopPropagation();
 }
 
+function getFileFormat(file) {
+  if (/image/.test(file)) {
+    return 'image';
+  }
+
+  if (/audio/.test(file)) {
+    return 'audio';
+  }
+
+  return null;
+}
+
 export {
   parseDate,
   findLinks,
@@ -74,4 +86,5 @@ export {
   checkTotalSize,
   showErrorPopup,
   preventDefaults,
+  getFileFormat,
 };

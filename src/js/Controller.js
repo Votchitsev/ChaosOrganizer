@@ -138,6 +138,7 @@ class Controller {
       audioElement.setAttribute('controls', '');
       audioElement.src = file;
       this.previewContainer.insertAdjacentElement('beforeend', audioElement);
+      this.file.push(file);
       return;
     }
 

@@ -4,6 +4,7 @@ import {
   findLinks,
   makeData,
   showErrorPopup,
+  getFileFormat,
 } from './Service';
 import request from './API/request';
 import DragAndDrop from './DragAndDrop';
@@ -119,7 +120,7 @@ class Controller {
     Array.from(this.fileInput.files).forEach((file) => {
       const reader = new FileReader();
       reader.addEventListener('load', (event) => {
-        this.addFilePreview(event.target.result);
+        this.addFilePreview(event.target.result, getFileFormat(event.target.result));
       });
       reader.readAsDataURL(file);
     });
@@ -131,7 +132,15 @@ class Controller {
     this.fileInput.click();
   }
 
-  addFilePreview(file) {
+  addFilePreview(file, format) {
+    if (format === 'audio') {
+      const audioElement = element('audio', null, []);
+      audioElement.setAttribute('controls', '');
+      audioElement.src = file;
+      this.previewContainer.insertAdjacentElement('beforeend', audioElement);
+      return;
+    }
+
     const img = element('img', null, []);
     img.src = file;
     this.previewContainer.insertAdjacentElement('beforeend', img);

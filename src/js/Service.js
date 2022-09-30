@@ -75,6 +75,10 @@ function getFileFormat(file) {
     return 'audio';
   }
 
+  if (/video/.test(file)) {
+    return 'video';
+  }
+
   return null;
 }
 

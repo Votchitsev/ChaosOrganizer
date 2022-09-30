@@ -175,6 +175,11 @@ img {
   height: 50px;
 }
 
+.video-file {
+  width: 250px;
+  margin-right: 5px;
+}
+
 @font-face {
   font-family: 'OpenSans';
   src: url(./fonts/OpenSans-Regular.ttf);

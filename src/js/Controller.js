@@ -142,6 +142,15 @@ class Controller {
       return;
     }
 
+    if (format === 'video') {
+      const videoElement = element('video', null, ['video-file']);
+      videoElement.setAttribute('controls', 'controls');
+      videoElement.src = file;
+      this.previewContainer.insertAdjacentElement('beforeend', videoElement);
+      this.file.push(file);
+      return;
+    }
+
     const img = element('img', null, []);
     img.src = file;
     this.previewContainer.insertAdjacentElement('beforeend', img);

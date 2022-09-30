@@ -37,6 +37,14 @@ class Post {
           return;
         }
 
+        if (getFileFormat(src) === 'video') {
+          const videoElement = element('video', null, ['video-file']);
+          videoElement.setAttribute('controls', 'controls');
+          videoElement.src = src;
+          fileContainer.append(videoElement);
+          return;
+        }
+
         const img = element('img', null, []);
         img.src = src;
         fileContainer.append(img);

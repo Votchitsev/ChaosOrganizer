@@ -8,6 +8,7 @@ import {
 } from './Service';
 import request from './API/request';
 import DragAndDrop from './DragAndDrop';
+import Searcher from './Search';
 
 class Controller {
   constructor(form, Post) {
@@ -20,6 +21,7 @@ class Controller {
     this.file = [];
     this.previewContainer = null;
     this.pagination = [0, 9];
+    this.requestBlocked = false;
 
     this.addEventListeners = this.addEventListeners.bind(this);
     this.sendPost = this.sendPost.bind(this);
@@ -35,6 +37,7 @@ class Controller {
 
   async init() {
     this.addEventListeners();
+
     const posts = await request(this.pagination, 'GET', '', null);
     const postsJSON = await posts.json();
     this.drawPostList(postsJSON, 'afterbegin');
@@ -42,6 +45,10 @@ class Controller {
     const dropZone = document.querySelector('#drop-zone');
     const dradAndDrop = new DragAndDrop(dropZone, this);
     dradAndDrop.init();
+
+    const searcher = new Searcher(this);
+    searcher.init();
+
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
   }
 
@@ -181,7 +188,7 @@ class Controller {
   async scroll(e) {
     let currentScroll;
 
-    if (e.target.scrollTop === 0) {
+    if (e.target.scrollTop === 0 && !this.requestBlocked) {
       currentScroll = e.target.scrollHeight;
       this.pagination = this.pagination.map((el) => el + 10);
       const posts = await request(this.pagination, 'GET', '', null);

@@ -14,7 +14,7 @@ async function request(pagination, method = 'GET', url = '', data = null) {
   }
 
   if (method === 'GET') {
-    response = await fetch(`${BASE_URL}{url}/?start=${pagination[0]}&end=${pagination[1]}`, {
+    response = await fetch(`${BASE_URL}?start=${pagination[0]}&end=${pagination[1]}${url}`, {
       method,
       headers: {
         'Content-Type': 'application/json',

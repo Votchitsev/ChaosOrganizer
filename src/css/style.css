@@ -8,6 +8,11 @@ body {
   position: relative;
 }
 
+header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .app-title {
   color: #5BCCD0;
   margin-left: 10%;
@@ -176,6 +181,29 @@ img {
 
 .context-menu.hidden {
   display: none;
+}
+
+.search-form {
+  display: flex;
+  justify-self: center;
+}
+
+.search-form > input {
+  height: 50%;
+  align-self: center;
+  border: 0;
+  outline: none;
+  padding: 0 15px 0 47px;
+  width: 250px;
+  border-radius: 20px;
+  background-image: url(../svg/search.svg);
+  background-repeat: no-repeat;
+  background-position: 5% center;
+}
+
+.search-form > input:focus {
+  outline: 3px solid #5BCCD0;
+  transition: all 100ms linear;
 }
 
 #drop-zone {

@@ -19,6 +19,7 @@ class Controller {
     this.fileInput = document.querySelector('#file-input');
     this.openFileUpload = document.querySelector('.file-upload');
     this.contextMenu = document.querySelector('.context-menu');
+    this.submitBtn = document.querySelector('.submit');
     this.Post = Post;
     this.file = [];
     this.previewContainer = null;
@@ -95,6 +96,9 @@ class Controller {
 
   sendPost(e) {
     e.preventDefault();
+
+    this.submitBtn.classList.add('hidden');
+
     const time = Date.now();
     const post = new this.Post(this.form.textInput.value, time, 'user', this.file);
     const text = post.HTMLElement.querySelector('.post-content');
@@ -152,6 +156,8 @@ class Controller {
     this.previewContainer = element('div', null, ['filePreviewContainer']);
     this.form.textForm.insertAdjacentElement('beforebegin', this.previewContainer);
     this.previewContainer.style.top = `${this.openFileUpload.offsetTop - 160}px`;
+
+    this.submitBtn.classList.remove('hidden');
 
     Array.from(this.fileInput.files).forEach((file) => {
       const reader = new FileReader();

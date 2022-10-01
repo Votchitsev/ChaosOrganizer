@@ -231,7 +231,11 @@ class Controller {
 
   getVideo() {
     const video = new Video(this);
-    video.create();
+    video.create()
+      .catch((error) => {
+        showErrorPopup(error);
+        video.changePlayBtnStyle('play');
+      });
   }
 }
 

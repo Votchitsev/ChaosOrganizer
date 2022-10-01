@@ -9,6 +9,7 @@ import {
 import request from './API/request';
 import DragAndDrop from './DragAndDrop';
 import Searcher from './Search';
+import Video from './Video';
 
 class Controller {
   constructor(form, Post) {
@@ -33,6 +34,7 @@ class Controller {
     this.scroll = this.scroll.bind(this);
     this.showContextMenu = this.showContextMenu.bind(this);
     this.downloadImage = this.downloadImage.bind(this);
+    this.getVideo = this.getVideo.bind(this);
   }
 
   async init() {
@@ -59,7 +61,7 @@ class Controller {
       this.contextMenu.classList.add('hidden');
     }
 
-    if (selector.contains('file-upload')) {
+    if (selector.contains('file')) {
       this.openUploadWindow(event);
     }
 
@@ -69,6 +71,10 @@ class Controller {
 
     if (selector.contains('context-menu')) {
       this.downloadImage(event);
+    }
+
+    if (selector.contains('video')) {
+      this.getVideo();
     }
   }
 
@@ -221,6 +227,11 @@ class Controller {
     const [img] = this.file;
     a.href = img;
     a.click();
+  }
+
+  getVideo() {
+    const video = new Video(this);
+    video.create();
   }
 }
 

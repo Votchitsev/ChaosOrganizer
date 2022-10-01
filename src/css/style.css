@@ -94,6 +94,15 @@ header {
   background-size: 23px;
 }
 
+.video {
+  background-image: url(../svg/video.svg);
+}
+
+.stop-video {
+  background-color: #FFA071;
+  background-image: url(../svg/stop.svg);
+}
+
 .file-upload:hover {
   width: 55px;
   height: 55px;
@@ -237,6 +246,13 @@ img {
 .video-file {
   width: 250px;
   margin-right: 5px;
+}
+
+.stream-video {
+  position: fixed;
+  top: 100px;
+  right: 100px;
+  border-radius: 10%;
 }
 
 @font-face {

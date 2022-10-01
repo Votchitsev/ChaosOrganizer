@@ -17,11 +17,16 @@ body {
   display: flex;
   flex-direction: column;
   height: 70vh;
-  width: 70%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
 
   overflow-y: scroll;
+  overflow: -moz-scrollbars-none;
+}
+
+.posts-container::-webkit-scrollbar {
+  width: 0;
 }
 
 .post-form {
@@ -102,9 +107,10 @@ body {
 }
 
 img {
-  height: 150px;
-  width: auto;
+  height: auto;
+  width: 31%;
   padding: 5px;
+  border-radius: 10%;
 }
 
 .error-popup {
@@ -147,6 +153,29 @@ img {
   top: 50%;
   left: 50%;
   translate: -50% 50%;
+}
+
+.context-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100px;
+  background-color:#FBD64B;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #2D8095;
+}
+
+.context-menu:hover {
+  background-color: #F9C311;
+  transition: background-color 200ms;
+}
+
+.context-menu.hidden {
+  display: none;
 }
 
 #drop-zone {

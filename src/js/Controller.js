@@ -15,6 +15,7 @@ class Controller {
     this.postsContainer = document.querySelector('.posts-container');
     this.fileInput = document.querySelector('#file-input');
     this.openFileUpload = document.querySelector('.file-upload');
+    this.contextMenu = document.querySelector('.context-menu');
     this.Post = Post;
     this.file = [];
     this.previewContainer = null;
@@ -28,6 +29,8 @@ class Controller {
     this.addFilePreview = this.addFilePreview.bind(this);
     this.clickEventRouter = this.clickEventRouter.bind(this);
     this.scroll = this.scroll.bind(this);
+    this.showContextMenu = this.showContextMenu.bind(this);
+    this.downloadImage = this.downloadImage.bind(this);
   }
 
   async init() {
@@ -44,6 +47,11 @@ class Controller {
 
   clickEventRouter(event) {
     const selector = event.target.classList;
+
+    if (!this.contextMenu.classList.contains('hidden')) {
+      this.contextMenu.classList.add('hidden');
+    }
+
     if (selector.contains('file-upload')) {
       this.openUploadWindow(event);
     }
@@ -51,13 +59,19 @@ class Controller {
     if (selector.contains('error-popup-btn')) {
       document.querySelector('.error-popup').remove();
     }
+
+    if (selector.contains('context-menu')) {
+      this.downloadImage(event);
+    }
   }
 
   addEventListeners() {
     this.form.textForm.addEventListener('submit', this.sendPost);
     window.addEventListener('click', this.clickEventRouter);
+    window.addEventListener('mousedown', this.showContextMenu);
     this.postsContainer.addEventListener('scroll', this.scroll);
     this.fileInput.addEventListener('change', this.fileInputOnChange);
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
   }
 
   sendPost(e) {
@@ -180,6 +194,26 @@ class Controller {
       this.drawPostList(postsJSON, 'afterbegin');
       this.postsContainer.scrollTop = e.target.scrollHeight - currentScroll;
     }
+  }
+
+  showContextMenu(e) {
+    e.stopPropagation();
+
+    if (e.button === 2 && e.target.tagName === 'IMG') {
+      this.file = [];
+      this.contextMenu.classList.remove('hidden');
+      this.contextMenu.style.top = `${e.clientY - this.contextMenu.getBoundingClientRect().height}px`;
+      this.contextMenu.style.left = `${e.clientX}px`;
+      this.file.push(e.target.src);
+    }
+  }
+
+  downloadImage() {
+    const a = element('a', null, []);
+    a.setAttribute('download', '');
+    const [img] = this.file;
+    a.href = img;
+    a.click();
   }
 }
 

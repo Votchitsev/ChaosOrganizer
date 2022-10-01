@@ -10,6 +10,7 @@ import request from './API/request';
 import DragAndDrop from './DragAndDrop';
 import Searcher from './Search';
 import Video from './Video';
+import Audio from './Audio';
 
 class Controller {
   constructor(form, Post) {
@@ -35,6 +36,7 @@ class Controller {
     this.showContextMenu = this.showContextMenu.bind(this);
     this.downloadImage = this.downloadImage.bind(this);
     this.getVideo = this.getVideo.bind(this);
+    this.getAudio = this.getAudio.bind(this);
   }
 
   async init() {
@@ -75,6 +77,10 @@ class Controller {
 
     if (selector.contains('video')) {
       this.getVideo();
+    }
+
+    if (selector.contains('audio')) {
+      this.getAudio();
     }
   }
 
@@ -235,6 +241,15 @@ class Controller {
       .catch((error) => {
         showErrorPopup(error);
         video.changePlayBtnStyle('play');
+      });
+  }
+
+  getAudio() {
+    const audio = new Audio(this);
+    audio.create()
+      .catch((error) => {
+        showErrorPopup(error);
+        audio.changePlayBtnStyle('play');
       });
   }
 }

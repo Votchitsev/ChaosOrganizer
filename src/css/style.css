@@ -98,7 +98,11 @@ header {
   background-image: url(../svg/video.svg);
 }
 
-.stop-video {
+.audio {
+  background-image: url(../svg/audio.svg);
+}
+
+.stop {
   background-color: #FFA071;
   background-image: url(../svg/stop.svg);
 }

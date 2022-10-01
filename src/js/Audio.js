@@ -1,42 +1,35 @@
 import { element, getFileFormat } from './Service';
 
-class Video {
+class Audio {
   constructor(controller) {
     this.controller = controller;
-    this.playBtn = document.querySelector('.file-upload.video');
+    this.playBtn = document.querySelector('.file-upload.audio');
     this.data = [];
-    this.videoStreamElement = null;
     this.playBtnState = 'play';
 
     this.changePlayBtnStyle = this.changePlayBtnStyle.bind(this);
-    this.makeFilePreview = this.makeFilePreview.bind(this);
-    this.closeStream = this.closeStream.bind(this);
+    this.create = this.create.bind(this);
   }
 
   async create() {
     this.changePlayBtnStyle('stop');
     this.playBtnState = 'stop';
-    this.videoStreamElement = element('video', null, ['stream-video']);
-    this.videoStreamElement.play();
-    document.documentElement.append(this.videoStreamElement);
 
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        width: 500,
-      },
+      audio: true,
     });
-
-    this.videoStreamElement.srcObject = stream;
 
     const recorder = new MediaRecorder(stream);
 
-    recorder.addEventListener('dataavailable', (e) => {
-      this.data.push(e.data);
+    recorder.addEventListener('start', () => {
+    });
+
+    recorder.addEventListener('dataavailable', (event) => {
+      this.data.push(event.data);
     });
 
     recorder.addEventListener('stop', () => {
       this.makeFilePreview();
-      this.closeStream();
       this.changePlayBtnStyle('start');
     });
 
@@ -53,12 +46,12 @@ class Video {
   changePlayBtnStyle(style) {
     if (style === 'stop') {
       this.playBtn.classList.add('stop');
-      this.playBtn.classList.remove('video');
+      this.playBtn.classList.remove('audio');
       return;
     }
 
     this.playBtn.classList.remove('stop');
-    this.playBtn.classList.add('video');
+    this.playBtn.classList.add('audio');
   }
 
   makeFilePreview() {
@@ -74,10 +67,6 @@ class Video {
       reader.readAsDataURL(item);
     });
   }
-
-  closeStream() {
-    this.videoStreamElement.remove();
-  }
 }
 
-export default Video;
+export default Audio;

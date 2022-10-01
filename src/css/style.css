@@ -102,6 +102,10 @@ header {
   background-image: url(../svg/audio.svg);
 }
 
+.geo {
+  background-image: url(../svg/geolocation.svg);
+}
+
 .stop {
   background-color: #FFA071;
   background-image: url(../svg/stop.svg);
@@ -239,6 +243,16 @@ img {
   transition: all 100ms;
   translate: 2.5px -2.5px;
   /* background-size: 25px; */
+}
+
+.geolocation {
+  height: 100px;
+  width: 100px;
+  display: block;
+  background-color: #AAC9FF;
+  background-image: url(../svg/geolocation-post.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #drop-zone {

@@ -11,6 +11,7 @@ import DragAndDrop from './DragAndDrop';
 import Searcher from './Search';
 import Video from './Video';
 import Audio from './Audio';
+import Geolocation from './Geolocation';
 
 class Controller {
   constructor(form, Post) {
@@ -38,6 +39,7 @@ class Controller {
     this.downloadImage = this.downloadImage.bind(this);
     this.getVideo = this.getVideo.bind(this);
     this.getAudio = this.getAudio.bind(this);
+    this.geoposition = this.geoposition.bind(this);
   }
 
   async init() {
@@ -82,6 +84,10 @@ class Controller {
 
     if (selector.contains('audio')) {
       this.getAudio();
+    }
+
+    if (selector.contains('geo')) {
+      this.geoposition();
     }
   }
 
@@ -257,6 +263,11 @@ class Controller {
         showErrorPopup(error);
         audio.changePlayBtnStyle('play');
       });
+  }
+
+  geoposition() {
+    const geoposition = new Geolocation(this);
+    geoposition.define();
   }
 }
 

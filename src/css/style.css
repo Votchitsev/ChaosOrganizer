@@ -40,7 +40,7 @@ header {
   margin-top: 30px;
 }
 
-.post-form > input[type="text"] {
+.post-form > .input-container > input[type="text"] {
   height: 50px;
   width: 500px;
   border-radius: 50px;
@@ -49,10 +49,31 @@ header {
   padding-right: 15px;
 }
 
-.post-form > input[type="text"]:focus {
+.post-form > .input-container > input[type="text"]:focus {
   outline: 3px solid #5BCCD0;
 
   transition: all 100ms linear;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+}
+
+#emoji-btn {
+  display: flex;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-image: url(../svg/emoji.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  right: 15px;
+  top: 15px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
 }
 
 .post {
@@ -200,6 +221,10 @@ img {
   display: none;
 }
 
+.visible-grid {
+  display: grid !important ;
+}
+
 .search-form {
   display: flex;
   justify-self: center;
@@ -255,6 +280,37 @@ img {
   background-position: center;
 }
 
+.emoji-list {
+  display: none;
+  grid-template-columns: auto auto auto auto;
+  width: 153px;
+  position: absolute;
+  top: -193px;
+  left: 339px;
+}
+
+.emoji-list > li {
+  list-style-type: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 0.2em;
+}
+
+.emoji-list > li:hover {
+  font-size: 1.7em;
+  padding: 0;
+  transition: font-size 0.2s linear;
+}
+
+#text-input + label {
+  position: relative;
+}
+
+#text-input.label::before {
+  position: absolute;
+  content: "\2709";
+  left: 10px;
+}
 #drop-zone {
   display: none;
   justify-content: center;

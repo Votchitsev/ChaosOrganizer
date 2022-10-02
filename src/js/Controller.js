@@ -12,6 +12,7 @@ import Searcher from './Search';
 import Video from './Video';
 import Audio from './Audio';
 import Geolocation from './Geolocation';
+import Emoji from './Emoji';
 
 class Controller {
   constructor(form, Post) {
@@ -55,6 +56,9 @@ class Controller {
 
     const searcher = new Searcher(this);
     searcher.init();
+
+    const emoji = new Emoji();
+    emoji.init();
 
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
   }

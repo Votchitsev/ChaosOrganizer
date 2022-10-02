@@ -18,7 +18,7 @@ class Geolocation {
     geoElement.href = `http://google.com/maps/@${position.coords.latitude},${position.coords.longitude}`;
 
     this.ctrl.previewContainer = element('div', null, ['filePreviewContainer']);
-    const input = document.querySelector('.post-form > input[type="text"]');
+    const input = document.querySelector('.post-form > .input-container > input[type="text"]');
     input.value += geoElement;
   }
 }

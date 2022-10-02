@@ -15,7 +15,6 @@ header {
 
 .app-title {
   color: #5BCCD0;
-  margin-left: 10%;
 }
 
 .posts-container {
@@ -35,6 +34,7 @@ header {
 }
 
 .post-form {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -141,9 +141,11 @@ header {
   background-size: 25px;
 }
 
-.filePreviewContainer {
+.file-preview-container {
   position: absolute;
+  bottom: 60px;
   display: flex;
+  flex-wrap: wrap;
   width: 500px;
   left: 50%;
   translate: -50%;

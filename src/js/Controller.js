@@ -24,7 +24,7 @@ class Controller {
     this.submitBtn = document.querySelector('.submit');
     this.Post = Post;
     this.file = [];
-    this.previewContainer = null;
+    this.previewContainer = document.querySelector('.file-preview-container');
     this.pagination = [0, 9];
     this.requestBlocked = false;
 
@@ -122,11 +122,6 @@ class Controller {
 
     request(this.pagination, 'POST', '', data)
       .then(() => { this.file = []; });
-
-    this.form.clean();
-    if (this.previewContainer) {
-      this.previewContainer.remove();
-    }
   }
 
   drawPost(post, where) {
@@ -153,19 +148,11 @@ class Controller {
       return;
     }
 
-    if (this.previewContainer) {
-      this.previewContainer.remove();
-    }
-
     const validatedSize = checkTotalSize(e.target.files, 10000000);
     if (!validatedSize) {
       showErrorPopup('Превышен максимальный размер передаваемых файлов (10 mb)');
       return;
     }
-
-    this.previewContainer = element('div', null, ['filePreviewContainer']);
-    this.form.textForm.insertAdjacentElement('beforebegin', this.previewContainer);
-    this.previewContainer.style.top = `${this.openFileUpload.offsetTop - 160}px`;
 
     this.submitBtn.classList.remove('hidden');
 
@@ -182,9 +169,9 @@ class Controller {
     e.preventDefault();
     this.fileInput.files = null;
     this.file = [];
-    if (this.previewContainer) {
-      this.previewContainer.remove();
-    }
+    // if (this.previewContainer) {
+    //   this.previewContainer.remove();
+    // }
     this.fileInput.click();
   }
 

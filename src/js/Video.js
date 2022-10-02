@@ -62,10 +62,6 @@ class Video {
   }
 
   makeFilePreview() {
-    this.controller.previewContainer = element('div', null, ['filePreviewContainer']);
-    this.controller.form.textForm.insertAdjacentElement('beforebegin', this.controller.previewContainer);
-    this.controller.previewContainer.style.top = `${this.controller.openFileUpload.offsetTop - 160}px`;
-
     this.controller.submitBtn.classList.remove('hidden');
 
     this.data.forEach((item) => {

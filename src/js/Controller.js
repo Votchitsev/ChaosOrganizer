@@ -175,9 +175,6 @@ class Controller {
     e.preventDefault();
     this.fileInput.files = null;
     this.file = [];
-    // if (this.previewContainer) {
-    //   this.previewContainer.remove();
-    // }
     this.fileInput.click();
   }
 

@@ -22,6 +22,7 @@ class Controller {
     this.openFileUpload = document.querySelector('.file-upload');
     this.contextMenu = document.querySelector('.context-menu');
     this.submitBtn = document.querySelector('.submit');
+    this.fullPhotoContainer = document.querySelector('.show-photo-container');
     this.Post = Post;
     this.file = [];
     this.previewContainer = document.querySelector('.file-preview-container');
@@ -41,6 +42,8 @@ class Controller {
     this.getVideo = this.getVideo.bind(this);
     this.getAudio = this.getAudio.bind(this);
     this.geoposition = this.geoposition.bind(this);
+    this.showFullPhoto = this.showFullPhoto.bind(this);
+    this.closeFullPhoto = this.closeFullPhoto.bind(this);
   }
 
   async init() {
@@ -92,6 +95,15 @@ class Controller {
 
     if (selector.contains('geo')) {
       this.geoposition();
+    }
+
+    if (event.target.parentElement.classList.contains('post-img-container')
+    && event.target.tagName === 'IMG') {
+      this.showFullPhoto(event);
+    }
+
+    if (selector.contains('show-photo-container--close')) {
+      this.closeFullPhoto();
     }
   }
 
@@ -262,6 +274,20 @@ class Controller {
   geoposition() {
     const geoposition = new Geolocation(this);
     geoposition.define();
+  }
+
+  showFullPhoto(e) {
+    const photo = e.target;
+    this.fullPhotoContainer.append(e.target);
+    this.fullPhotoContainer.classList.remove('photo-container--hidden');
+    this.fullPhotoContainer.classList.add('photo-container--visible');
+    photo.classList.add('full-photo');
+  }
+
+  closeFullPhoto() {
+    this.fullPhotoContainer.classList.add('photo-container--hidden');
+    this.fullPhotoContainer.classList.remove('photo-container--visible');
+    this.fullPhotoContainer.querySelector('.full-photo').remove();
   }
 }
 

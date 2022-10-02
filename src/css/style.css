@@ -22,6 +22,7 @@ header {
   flex-direction: column;
   height: 70vh;
   width: 50%;
+  min-width: 600px;
   margin-left: auto;
   margin-right: auto;
 
@@ -60,6 +61,7 @@ header {
 .input-container {
   position: relative;
   display: flex;
+  max-width: 50vw;
 }
 
 #emoji-btn {
@@ -132,6 +134,10 @@ header {
 .stop {
   background-color: #FFA071;
   background-image: url(../svg/stop.svg);
+}
+
+.btns-container {
+  display: flex;
 }
 
 .file-upload:hover {
@@ -355,6 +361,91 @@ img {
   top: 100px;
   right: 100px;
   border-radius: 10%;
+  max-height: 70vh;
+}
+
+@media screen and (max-width: 479px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .app-title {
+    margin-bottom: 2%;
+    margin-top: 0;
+  }
+
+  .search-form > input {
+    height: 50px;
+  }
+
+  .search-form {
+    margin-bottom: 10px;
+  }
+
+  .posts-container {
+    width: 98%;
+    height: 64vh;
+    min-width: 0;
+  }
+
+  .post {
+    width: 90%;
+  }
+
+  .video-file {
+    width: 100%;
+  }
+
+  .file-preview-container {
+    width: 100%;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  img {
+    width: 30%;
+  }
+
+  .post-form {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  .btns-container {
+    position: absolute;
+    bottom: 110%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #text-input {
+    width: 100%;
+  }
+
+  .emoji-list {
+    top: -480%;
+    width: 50%;
+    left: 35%;
+  }
+
+  .stream-video {
+    top: 8%;
+    right: 5%;
+    width: 60%;
+  }
+
+  .file-preview-container > video {
+    width: 50%;
+  }
+
+  .input-container {
+    max-width: 100%;
+  }
 }
 
 @font-face {

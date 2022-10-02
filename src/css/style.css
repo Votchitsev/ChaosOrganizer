@@ -38,6 +38,8 @@ header {
   display: flex;
   justify-content: center;
   margin-top: 30px;
+  box-sizing: content-box;
+  height: 55px;
 }
 
 .post-form > .input-container > input[type="text"] {
@@ -251,25 +253,27 @@ img {
 }
 
 .submit {
-  text-transform: uppercase;
-  font-size: 1.3em;
   border:none;
   margin-left: 10px;
   height: 50px;
-  width: 100px;
+  width: 50px;
   background-color: #48D63B;
   color: #CAFAB2;
   border-radius: 45px;
+  background-image: url(../svg/send.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 23px;
 }
 
 .submit:hover {
   cursor: pointer;
-  width: 105px;
+  width: 55px;
   height: 55px;
   margin-left: 5px;
   transition: all 100ms;
   translate: 2.5px -2.5px;
-  /* background-size: 25px; */
+  background-size: 25px;
 }
 
 .geolocation {

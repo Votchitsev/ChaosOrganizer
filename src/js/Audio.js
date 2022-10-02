@@ -55,8 +55,6 @@ class Audio {
   }
 
   makeFilePreview() {
-    this.controller.submitBtn.classList.remove('hidden');
-
     this.data.forEach((item) => {
       const reader = new FileReader();
       reader.addEventListener('load', (event) => {

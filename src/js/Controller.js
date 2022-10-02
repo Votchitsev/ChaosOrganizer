@@ -107,8 +107,6 @@ class Controller {
   sendPost(e) {
     e.preventDefault();
 
-    this.submitBtn.classList.add('hidden');
-
     const time = Date.now();
     const post = new this.Post(this.form.textInput.value, time, 'user', this.file);
     const text = post.HTMLElement.querySelector('.post-content');
@@ -122,6 +120,9 @@ class Controller {
 
     request(this.pagination, 'POST', '', data)
       .then(() => { this.file = []; });
+
+    this.form.textInput.value = '';
+    this.previewContainer.innerHTML = '';
   }
 
   drawPost(post, where) {
@@ -151,6 +152,11 @@ class Controller {
     const validatedSize = checkTotalSize(e.target.files, 10000000);
     if (!validatedSize) {
       showErrorPopup('Превышен максимальный размер передаваемых файлов (10 mb)');
+      return;
+    }
+
+    if (this.fileInput.files.length > 6) {
+      showErrorPopup('Слишком много файлов (максимум 6)');
       return;
     }
 

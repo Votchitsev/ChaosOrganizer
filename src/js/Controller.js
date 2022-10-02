@@ -103,7 +103,7 @@ class Controller {
     }
 
     if (selector.contains('show-photo-container--close')) {
-      this.closeFullPhoto();
+      this.closeFullPhoto(event);
     }
   }
 
@@ -278,10 +278,12 @@ class Controller {
 
   showFullPhoto(e) {
     const photo = e.target;
-    this.fullPhotoContainer.append(e.target);
+    const fullPhoto = element('img', null, ['full-photo']);
+    fullPhoto.src = photo.src;
+    this.fullPhotoContainer.append(fullPhoto);
     this.fullPhotoContainer.classList.remove('photo-container--hidden');
     this.fullPhotoContainer.classList.add('photo-container--visible');
-    photo.classList.add('full-photo');
+    // photo.classList.add('full-photo');
   }
 
   closeFullPhoto() {

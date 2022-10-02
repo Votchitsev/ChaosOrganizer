@@ -166,6 +166,10 @@ img {
   border-radius: 10%;
 }
 
+.post-img-container > img {
+  cursor: pointer;
+}
+
 .error-popup {
   display: flex;
   flex-direction: column;

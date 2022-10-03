@@ -1,0 +1,1 @@
+For this project used svg icons from https://icons.getbootstrap.com/

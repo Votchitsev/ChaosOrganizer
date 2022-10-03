@@ -1,5 +1,5 @@
 async function request(pagination, method = 'GET', url = '', data = null) {
-  const BASE_URL = 'http://localhost:8080/';
+  const BASE_URL = 'https://mighty-reef-35019.herokuapp.com/';
   let response;
 
   if (method === 'POST') {

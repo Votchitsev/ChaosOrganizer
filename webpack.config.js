@@ -42,5 +42,5 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new MiniCssExtractPlugin(),
   ],
-  mode: 'production',
+  mode: 'development',
 };

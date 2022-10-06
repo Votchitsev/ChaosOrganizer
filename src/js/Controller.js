@@ -125,13 +125,19 @@ class Controller {
 
     text.innerHTML = findLinks(text);
 
-    this.drawPost(post.HTMLElement, 'beforeend');
     this.postsContainer.scrollTop = this.postsContainer.scrollHeight;
 
     const data = makeData(post);
 
     request(this.pagination, 'POST', '', data)
-      .then(() => { this.file = []; });
+      .then((response) => {
+        this.file = [];
+        return response.json();
+      })
+      .then((responseJSON) => {
+        post.HTMLElement.setAttribute('post_id', responseJSON.id);
+        this.drawPost(post.HTMLElement, 'beforeend');
+      });
 
     this.form.textInput.value = '';
     this.previewContainer.innerHTML = '';
@@ -143,10 +149,13 @@ class Controller {
 
   drawPostList(postList, where) {
     for (let i = 0; i < postList.length; i += 1) {
-      const { text, time, files } = postList[i];
+      const {
+        id, text, time, files,
+      } = postList[i];
       const post = new this.Post(text, time, 'user', files);
-      const textElement = post.HTMLElement.querySelector('.post-content');
+      post.HTMLElement.setAttribute('post_id', id);
 
+      const textElement = post.HTMLElement.querySelector('.post-content');
       textElement.innerHTML = findLinks(textElement);
       this.drawPost(post.HTMLElement, where);
     }

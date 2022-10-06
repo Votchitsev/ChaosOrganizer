@@ -1,5 +1,5 @@
-async function request(pagination, method = 'GET', url = '', data = null) {
-  const BASE_URL = 'http://localhost:8080/';
+async function request(pagination, method = 'GET', url = '', data = null, id = null) {
+  const BASE_URL = 'https://mighty-reef-35019.herokuapp.com/';
   let response;
 
   if (method === 'POST') {
@@ -18,6 +18,15 @@ async function request(pagination, method = 'GET', url = '', data = null) {
       method,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
+
+  if (method === 'DELETE') {
+    response = await fetch(`${BASE_URL}?id=${id}`, {
+      method,
+      headers: {
         'Access-Control-Allow-Origin': '*',
       },
     });

@@ -226,6 +226,14 @@ img {
   color: #2D8095;
 }
 
+.delete {
+  background-color: #FF8B75;
+}
+
+.delete:hover {
+  background-color: #DB3333;
+}
+
 .context-menu:hover {
   background-color: #F9C311;
   transition: background-color 200ms;

@@ -28,6 +28,7 @@ class Controller {
     this.previewContainer = document.querySelector('.file-preview-container');
     this.pagination = [0, 9];
     this.requestBlocked = false;
+    this.deletingPostId = null;
 
     this.addEventListeners = this.addEventListeners.bind(this);
     this.sendPost = this.sendPost.bind(this);
@@ -44,6 +45,7 @@ class Controller {
     this.geoposition = this.geoposition.bind(this);
     this.showFullPhoto = this.showFullPhoto.bind(this);
     this.closeFullPhoto = this.closeFullPhoto.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   async init() {
@@ -82,7 +84,13 @@ class Controller {
     }
 
     if (selector.contains('context-menu')) {
-      this.downloadImage(event);
+      if (event.target.getAttribute('action') === 'load') {
+        this.downloadImage(event);
+      }
+
+      if (event.target.getAttribute('action') === 'delete') {
+        this.deletePost();
+      }
     }
 
     if (selector.contains('video')) {
@@ -245,12 +253,25 @@ class Controller {
   showContextMenu(e) {
     e.stopPropagation();
 
-    if (e.button === 2 && e.target.tagName === 'IMG') {
-      this.file = [];
-      this.contextMenu.classList.remove('hidden');
-      this.contextMenu.style.top = `${e.clientY - this.contextMenu.getBoundingClientRect().height}px`;
-      this.contextMenu.style.left = `${e.clientX}px`;
-      this.file.push(e.target.src);
+    if (e.button === 2) {
+      if (e.target.tagName === 'IMG') {
+        this.file = [];
+        this.contextMenu.classList.remove('hidden');
+        this.contextMenu.textContent = 'Загрузить';
+        this.contextMenu.setAttribute('action', 'load');
+        this.contextMenu.style.top = `${e.clientY - this.contextMenu.getBoundingClientRect().height}px`;
+        this.contextMenu.style.left = `${e.clientX}px`;
+        this.file.push(e.target.src);
+      }
+
+      if (/post($|-content)|post-title|post-img-container/.test(e.target.className)) {
+        this.contextMenu.classList.remove('hidden');
+        this.contextMenu.textContent = 'Удалить';
+        this.contextMenu.setAttribute('action', 'delete');
+        this.contextMenu.style.top = `${e.clientY - this.contextMenu.getBoundingClientRect().height}px`;
+        this.contextMenu.style.left = `${e.clientX}px`;
+        this.deletingPostId = e.target.closest('.post').getAttribute('post_id');
+      }
     }
   }
 
@@ -292,13 +313,24 @@ class Controller {
     this.fullPhotoContainer.append(fullPhoto);
     this.fullPhotoContainer.classList.remove('photo-container--hidden');
     this.fullPhotoContainer.classList.add('photo-container--visible');
-    // photo.classList.add('full-photo');
   }
 
   closeFullPhoto() {
     this.fullPhotoContainer.classList.add('photo-container--hidden');
     this.fullPhotoContainer.classList.remove('photo-container--visible');
     this.fullPhotoContainer.querySelector('.full-photo').remove();
+  }
+
+  deletePost() {
+    request(null, 'DELETE', '', null, this.deletingPostId)
+      .then((response) => {
+        if (response.status === 200) {
+          document.querySelector(`[post_id="${this.deletingPostId}"]`).remove();
+          return;
+        }
+
+        showErrorPopup(response.statusText);
+      });
   }
 }
 

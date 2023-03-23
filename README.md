@@ -6,6 +6,12 @@
 
 Сервер для проекта [здесь](https://github.com/Votchitsev/ChaosOrganizer-server).
 
+## Запуск
+1) `git clone https://github.com/Votchitsev/ChaosOrganizer.git`
+2) `cd ChaosOrganizer/`
+3) `npm install`
+4) `npm run serve`
+
 ## Сохранение в истории ссылок и текстовых сообщений
 
 Приложение может сохранять текстовые сообщения и ссылки в них. При этом ссылки остаются кликабельными.

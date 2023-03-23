@@ -2,9 +2,15 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/jgt4gqthgq6s5dmt?svg=true)](https://ci.appveyor.com/project/Votchitsev/chaosorganizer)
 
-Привет! Представляю вам пиложение по сбору и хранению информации, реализованное в виде неперывной ленты сообщений в которую можно сохранить текст, фото, видео и аудио. Открыть web-страницу можно [здесь](https://votchitsev.github.io/ChaosOrganizer/).
+Привет! Представляю вам пиложение по сбору и хранению информации, реализованное в виде неперывной ленты сообщений в которую можно сохранить текст, фото, видео и аудио.
 
-Сервер для проекта [здесь](https://github.com/Votchitsev/ChaosOrganizer-server).
+Сервер для проекта и инструкция по его запуску [здесь](https://github.com/Votchitsev/ChaosOrganizer-server).
+
+## Запуск
+1) `git clone https://github.com/Votchitsev/ChaosOrganizer.git`
+2) `cd ChaosOrganizer/`
+3) `npm install`
+4) `npm run serve`
 
 ## Сохранение в истории ссылок и текстовых сообщений
 
